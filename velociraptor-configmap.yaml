@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: velociraptor
+  name: velociraptor-server.config.yaml
+  namespace: monitoring
+data:
+  server.config.yaml: |
+    {
+      "Frontend":{
+        "public_path":"public",
+        "hostname":"VelociraptorServer"
+      },
+      "API":{
+        "bind_address":"0.0.0.0"
+      },
+      "GUI":{
+        "bind_address":"0.0.0.0"
+      },
+      "Monitoring":{
+        "bind_address":"0.0.0.0"
+      },
+      "Logging":{
+        "output_directory":".",
+        "separate_logs_per_component":true
+      },
+      "Client":{
+        "server_urls":["https://VelociraptorServer:8000/"],
+        "use_self_signed_ssl":true
+      },
+      "Datastore":{
+        "location":"./",
+        "filestore_directory":"./"
+      }
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: velociraptor
+  name: velociraptor-server.config.yaml
+  namespace: monitoring
+data:
+  public_path: public
+  hostname: VelociraptorServer
+  bind_address: 0.0.0.0
+  output_directory:
+  separate_logs_per_component: true
+  server_urls: ["'https://VelociraptorServer:8000/'"]
+  use_self_signed_ssl: true
+  location: '$DATASTORE_LOCATION'
+  filestore_directory: '$FILESTORE_DIRECTORY'
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    app: velociraptor
+  name: velociraptor-admin-password
+  namespace: monitoring
+data:
+  VELOX_USER: admin
+  VELOX_PASSWORD: admin
+  VELOX_ROLE: administrator
