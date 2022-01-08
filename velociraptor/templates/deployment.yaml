@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "velociraptor.fullname" . }}
+  labels:
+    {{- include "velociraptor.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "velociraptor.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "velociraptor.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "velociraptor.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            ["./velociraptor config generate > server.config.yaml --merge '{"Frontend":{"public_path":"'{{int .Values.extraArgs.PUBLIC_PATH}}'", "hostname":"'{{int .Values.extraArgs.VELOX_FRONTEND_HOSTNAME}}'"}, "API":{"bind_address":"'{{int .Values.extraArgs.BIND_ADDRESS}}'"}, "GUI":{"bind_address":"'{{int .Values.extraArgs.BIND_ADDRESS}}'"}, "Monitoring":{"bind_address":"'{{int .Values.extraArgs.BIND_ADDRESS}}'"}, "Logging":{"output_directory":"'{{int .Values.extraArgs.LOG_DIR}}'", "separate_logs_per_component":"'{{int .Values.extraArgs.LOG_PER_COMPONENT}}'"}, "Client":{"server_urls":["'{{int .Values.extraArgs.VELOX_SERVER_URL}}'"], "use_self_signed_ssl":"'{{int .Values.extraArgs.SELF_SIGNED_CERT}}'"}, "Datastore":{"location":"'{{int .Values.extraArgs.DATASTORE_LOCATION}}'", "filestore_directory":"'{{int .Values.extraArgs.FILESTORE_DIRECTORY}}'"}}'
+              sed -i 's#/tmp/velociraptor#.#'g server.config.yaml &&\
+              ./velociraptor --config server.config.yaml user add {{int .Values.extraArgs.VELOX_USER}} {{int .Values.extraArgs.VELOX_PASSWORD}} --role administrator &&\
+              ./velociraptor --config server.config.yaml config client > client.config.yaml &&\
+              ./velociraptor config repack --exe clients/linux/velociraptor_client client.config.yaml clients/linux/velociraptor_client_repacked &&\
+              ./velociraptor config repack --exe clients/mac/velociraptor_client client.config.yaml clients/mac/velociraptor_client_repacked &&\
+              ./velociraptor config repack --exe clients/windows/velociraptor_client.exe client.config.yaml clients/windows/velociraptor_client_repacked.exe &&\
+              ./velociraptor --config server.config.yaml frontend -v"
+            ]
+          ports:
+            - name: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+            - name: {{ .Values.service.port2 }}
+              containerPort: {{ .Values.service.port2 }}
+              protocol: TCP
+            - name: {{ .Values.service.port3 }}
+              containerPort: {{ .Values.service.port3 }}
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /velociraptor/
+              name: {{ include "velociraptor.fullname" . }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: {{ include "velociraptor.fullname" . }}
+          persistentVolumeClaim:
+            claimName: {{ include "velociraptor.fullname" . }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
