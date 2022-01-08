@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "velociraptor.fullname" . }}
+  labels:
+    {{- include "velociraptor.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      {{- if .Values.persistentvolumeclaim.storage }}
+      storage: 100Mi
+      {{- end }}
+  {{- if .Values.persistentvolumeclaim.storageClassName }}
+  storageClassName: []
+  {{- end }}
