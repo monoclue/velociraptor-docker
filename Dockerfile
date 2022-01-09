@@ -28,8 +28,8 @@ WORKDIR /velociraptor
 # Move binaries into place
 RUN cp /opt/velociraptor/linux/velociraptor . && chmod +x velociraptor && \
     mkdir -p /velociraptor/clients/linux && rsync -a /opt/velociraptor/linux/velociraptor /velociraptor/clients/linux/velociraptor_client &&\
-    mkdir /velociraptor/startup
+    mkdir /opt/velociraptor/startup
 #    chmod +x /velociraptor/startup/entry.sh
 
 # Configmap details
-CMD ['/velociraptor/startup/entry.sh']
+CMD ['/opt/velociraptor/startup/entry.sh']

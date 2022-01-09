@@ -34,7 +34,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ###command: [{{ .Files.Get "entry.sh" }}]
-          command: ["/velociraptor/startup/entry.sh"]
+          command: ["/opt/velociraptor/startup/entry.sh"]
           args: []
           ports:
             - name: velo-port1
