@@ -31,6 +31,5 @@ RUN cp /opt/velociraptor/linux/velociraptor . && chmod +x velociraptor && \
     mkdir /velociraptor/startup &&\
     chmod +x /velociraptor/startup/entry.sh
 
-
 # Configmap details
 ENTRYPOINT ['/velociraptor/startup/entry.sh']
