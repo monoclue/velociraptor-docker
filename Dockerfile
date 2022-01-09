@@ -29,8 +29,8 @@ WORKDIR /velociraptor
 RUN cp /opt/velociraptor/linux/velociraptor . && chmod +x velociraptor && \
     mkdir -p /velociraptor/clients/linux && rsync -a /opt/velociraptor/linux/velociraptor /velociraptor/clients/linux/velociraptor_client &&\
     mkdir /velociraptor/startup &&\
-    echo "chmod" &&\
-    chmod +x /velociraptor/startup/entry.sh
+    echo "chmod"
+#    chmod +x /velociraptor/startup/entry.sh
 
 # Configmap details
 CMD ['/velociraptor/startup/entry.sh']
