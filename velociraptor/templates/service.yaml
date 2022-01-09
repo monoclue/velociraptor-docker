@@ -8,16 +8,16 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: {{ .Values.service.port }}
       protocol: TCP
-      name: {{ .Values.service.port }}
-    - port: {{ .Values.service.port2 }}
-      targetPort: http
+      name: velo-port1
+    - port: {{ .Values.service2.port }}
+      targetPort: {{ .Values.service2.port }}
       protocol: TCP
-      name: {{ .Values.service.port2 }}
-    - port: {{ .Values.service.port3 }}
-      targetPort: http
+      name: velo-port2
+    - port: {{ .Values.serviceweb.port }}
+      targetPort: {{ .Values.serviceweb.port }}
       protocol: TCP
-      name: {{ .Values.service.port3 }}
+      name: velo-web
   selector:
     {{- include "velociraptor.selectorLabels" . | nindent 4 }}

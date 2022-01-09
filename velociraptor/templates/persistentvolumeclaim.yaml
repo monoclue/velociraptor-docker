@@ -13,5 +13,5 @@ spec:
       storage: 100Mi
       {{- end }}
   {{- if .Values.persistentvolumeclaim.storageClassName }}
-  storageClassName: []
+  storageClassName: {{ .Values.persistentvolumeclaim.storageClassName }}
   {{- end }}

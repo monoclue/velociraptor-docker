@@ -27,14 +27,10 @@ WORKDIR /velociraptor
 
 # Move binaries into place
 RUN cp /opt/velociraptor/linux/velociraptor . && chmod +x velociraptor && \
-    mkdir -p /velociraptor/clients/linux && rsync -a /opt/velociraptor/linux/velociraptor /velociraptor/clients/linux/velociraptor_client
+    mkdir -p /velociraptor/clients/linux && rsync -a /opt/velociraptor/linux/velociraptor /velociraptor/clients/linux/velociraptor_client &&\
+    mkdir /velociraptor/startup &&\
+    chmod +x /velociraptor/startup/entry.sh
+
 
 # Configmap details
-ENTRYPOINT ["./velociraptor config generate > server.config.yaml --merge '{"Frontend":{"public_path":"'public'", "hostname":"'VelociraptorServer'"},"API":{"bind_address":"'0.0.0.0'"},"GUI":{"bind_address":"'0.0.0.0'"},"Monitoring":{"bind_address":"'0.0.0.0'"},"Logging":{"output_directory":"'./'","separate_logs_per_component":true},"Client":{"server_urls":["'VelociraptorServer'"],"use_self_signed_ssl":true}, "Datastore":{"location":"'./'", "filestore_directory":"'./'"}}' &&\
-      sed -i 's#/tmp/velociraptor#.#'g server.config.yaml &&\
-      ./velociraptor --config server.config.yaml user add $VELOX_USER $VELOX_PASSWORD --role $VELOX_ROLE &&\
-      ./velociraptor --config server.config.yaml config client > client.config.yaml &&\
-      ./velociraptor config repack --exe clients/linux/velociraptor_client client.config.yaml clients/linux/velociraptor_client_repacked &&\
-      ./velociraptor config repack --exe clients/mac/velociraptor_client client.config.yaml clients/mac/velociraptor_client_repacked &&\
-      ./velociraptor config repack --exe clients/windows/velociraptor_client.exe client.config.yaml clients/windows/velociraptor_client_repacked.exe &&\
-      ./velociraptor --config server.config.yaml frontend -v"]
+ENTRYPOINT ['/velociraptor/startup/entry.sh']
