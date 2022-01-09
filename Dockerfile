@@ -23,7 +23,7 @@ RUN chmod +x entrypoint && \
   # Clean up
     apt-get remove -y --purge curl wget jq && \
     apt-get clean
-WORKDIR /velociraptor
+WORKDIR /opt/velociraptor
 
 # Move binaries into place
 RUN cp /opt/velociraptor/linux/velociraptor . && chmod +x velociraptor && \
