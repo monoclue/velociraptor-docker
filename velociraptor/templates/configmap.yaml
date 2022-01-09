@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "velociraptor.labels" . | nindent 4 }}
 data:
-  entrypoint.sh: |-
+  entry.sh: |
           #!/bin/bash
           echo "Step1"
           ./velociraptor config generate > server.config.yaml --merge '{"Frontend":{"public_path":"'{{ .Values.extraArgs.PUBLIC_PATH }}'", "hostname":"'{{ .Values.extraArgs.VELOX_FRONTEND_HOSTNAME }}'"}, "API":{"bind_address":"'{{ .Values.extraArgs.BIND_ADDRESS }}'"}, "GUI":{"bind_address":"'{{ .Values.extraArgs.BIND_ADDRESS }}'"}, "Monitoring":{"bind_address":"'{{ .Values.extraArgs.BIND_ADDRESS }}'"}, "Logging":{"output_directory":"'{{ .Values.extraArgs.LOG_DIR }}'", "separate_logs_per_component":"'{{ .Values.extraArgs.LOG_PER_COMPONENT }}'"}, "Client":{"server_urls":["'{{ .Values.extraArgs.VELOX_SERVER_URL }}'"], "use_self_signed_ssl":"'{{ .Values.extraArgs.SELF_SIGNED_CERT }}'"}, "Datastore":{"location":"'{{ .Values.extraArgs.DATASTORE_LOCATION }}'", "filestore_directory":"'{{ .Values.extraArgs.FILESTORE_DIRECTORY }}'"}}' &&\
