@@ -49,7 +49,8 @@ spec:
             - mountPath: /velociraptor/
               name: {{ include "velociraptor.fullname" . }}
             - mountPath: /velociraptor/startup/entry.sh
-              name: entry-sh
+              name: entrypoint
+              subPath: entry.sh
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -60,7 +61,7 @@ spec:
         - name: {{ include "velociraptor.fullname" . }}
           persistentVolumeClaim:
             claimName: {{ include "velociraptor.fullname" . }}
-        - name: entry-sh
+        - name: entrypoint
           configMap:
             name: {{ include "velociraptor.fullname" . }}
       {{- with .Values.affinity }}
