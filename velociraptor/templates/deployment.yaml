@@ -34,8 +34,31 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ###command: [{{ .Files.Get "entry.sh" }}]
-          command: ["/velociraptor/startup/entry.sh"]
+          #command: ["entry.sh"]
           args: []
+          env:
+            - name: "PUBLIC_PATH"
+              value: "{{ .Values.env.PUBLIC_PATH }}"
+            - name: "VELOX_FRONTEND_HOSTNAME"
+              value: "{{ .Values.env.VELOX_FRONTEND_HOSTNAME }}"
+            - name: "BIND_ADDRESS"
+              value: "{{ .Values.env.BIND_ADDRESS }}"
+            - name: "LOG_DIR"
+              value: "{{ .Values.env.LOG_DIR }}"
+            - name: "LOG_PER_COMPONENT"
+              value: "{{ .Values.env.LOG_PER_COMPONENT }}"
+            - name: "VELOX_SERVER_URL"
+              value: "{{ .Values.env.VELOX_SERVER_URL }}"
+            - name: "SELF_SIGNED_CERT"
+              value: "{{ .Values.env.SELF_SIGNED_CERT }}"
+            - name: "DATASTORE_LOCATION"
+              value: "{{ .Values.env.DATASTORE_LOCATION }}"
+            - name: "FILESTORE_DIRECTORY"
+              value: "{{ .Values.env.FILESTORE_DIRECTORY }}"
+            - name: "VELOX_USER"
+              value: "{{ .Values.env.VELOX_USER }}"
+            - name: "VELOX_PASSWORD"
+              value: "{{ .Values.env.VELOX_PASSWORD }}"
           ports:
             - name: velo-port1
               containerPort: {{ .Values.service.port }}

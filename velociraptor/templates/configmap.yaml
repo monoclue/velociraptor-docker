@@ -5,4 +5,4 @@ metadata:
   labels:
     {{- include "velociraptor.labels" . | nindent 4 }}
 data:
-  {{ (.Files.Glob entry.sh).AsConfig | indent 2 }}
+  {{ (.Files.Glob "entry.sh").AsConfig | indent 2 }}

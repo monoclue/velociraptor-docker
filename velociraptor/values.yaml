@@ -55,7 +55,7 @@ env:
   BIND_ADDRESS: 0.0.0.0
   LOG_DIR: ./
   LOG_PER_COMPONENT: true
-  VELOX_SERVER_URL: VelociraptorServer
+  VELOX_SERVER_URL: https://VelociraptorServer:8000/
   SELF_SIGNED_CERT: true
   DATASTORE_LOCATION: ./
   FILESTORE_DIRECTORY: ./
