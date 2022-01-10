@@ -3,7 +3,9 @@ LABEL version="Velociraptor v0.6.1"
 LABEL description="Velociraptor server in a Docker container"
 LABEL maintainer="Wes Lambert, @therealwlambert"
 ENV VERSION="0.6.1"
-RUN apt-get update && \
+COPY ./entry.sh .
+RUN chmod +x entry.sh && \
+    apt-get update && \
     apt-get install -y curl wget jq rsync && \
     # Create dirs for Velo binaries
     mkdir -p /opt/velociraptor && \
@@ -27,7 +29,7 @@ WORKDIR /velociraptor
 RUN cp /opt/velociraptor/linux/velociraptor . && chmod +x velociraptor && \
     mkdir -p /velociraptor/clients/linux && rsync -a /opt/velociraptor/linux/velociraptor /velociraptor/clients/linux/velociraptor_client &&\
     mkdir /velociraptor/startup
-#    chmod +x /velociraptor/startup/entry.sh
+    chmod +x /velociraptor/startup/entry.sh
 
 # Configmap details
-CMD ['/velociraptor/startup/entry.sh']
+CMD ['entry.sh']
