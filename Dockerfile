@@ -23,6 +23,7 @@ RUN chmod +x entry.sh && \
   # Clean up
     apt-get remove -y --purge curl wget jq && \
     apt-get clean
+
 WORKDIR /velociraptor
 
 # Move binaries into place

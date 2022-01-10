@@ -59,6 +59,8 @@ spec:
               value: "{{ .Values.env.VELOX_USER }}"
             - name: "VELOX_PASSWORD"
               value: "{{ .Values.env.VELOX_PASSWORD }}"
+            - name: "VELOX_ROLE"
+              value: "{{ .Values.env.VELOX_ROLE }}"
           ports:
             - name: velo-port1
               containerPort: {{ .Values.service.port }}
