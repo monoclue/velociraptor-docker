@@ -3,9 +3,7 @@ LABEL version="Velociraptor v0.6.1"
 LABEL description="Velociraptor server in a Docker container"
 LABEL maintainer="Wes Lambert, @therealwlambert"
 ENV VERSION="0.6.1"
-COPY ./entrypoint .
-RUN chmod +x entrypoint && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y curl wget jq rsync && \
     # Create dirs for Velo binaries
     mkdir -p /opt/velociraptor && \
@@ -23,13 +21,13 @@ RUN chmod +x entrypoint && \
   # Clean up
     apt-get remove -y --purge curl wget jq && \
     apt-get clean
-WORKDIR /opt/velociraptor
+WORKDIR /velociraptor
 
 # Move binaries into place
 RUN cp /opt/velociraptor/linux/velociraptor . && chmod +x velociraptor && \
     mkdir -p /velociraptor/clients/linux && rsync -a /opt/velociraptor/linux/velociraptor /velociraptor/clients/linux/velociraptor_client &&\
-    mkdir /opt/velociraptor/startup
+    mkdir /velociraptor/startup
 #    chmod +x /velociraptor/startup/entry.sh
 
 # Configmap details
-CMD ['/opt/velociraptor/startup/entry.sh']
+CMD ['/velociraptor/startup/entry.sh']
