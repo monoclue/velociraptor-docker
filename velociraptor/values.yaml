@@ -61,7 +61,7 @@ env:
   FILESTORE_DIRECTORY: ./
   VELOX_USER: admin
   VELOX_PASSWORD: admin
-  VELOX_ROLE: adminstrator
+  VELOX_ROLE: administrator
 
 config:
   name: entry.sh
