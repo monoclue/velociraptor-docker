@@ -3,12 +3,12 @@ entries:
   velociraptor:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-01-12T22:35:10.98063Z"
+    created: "2022-01-12T22:40:59.759265Z"
     description: A Helm chart for Kubernetes
     digest: 680ba36976482a23b86b6231109bb0e104ee97bb4baf688dee918b1f1bd1788c
     name: velociraptor
     type: application
     urls:
-    - https://https:/monoclue.github.io/velociraptor-docker/velociraptor-0.1.0.tgz
+    - https://monoclue.github.io/velociraptor-docker/velociraptor-0.1.0.tgz
     version: 0.1.0
-generated: "2022-01-12T22:35:10.977723Z"
+generated: "2022-01-12T22:40:59.758009Z"
