@@ -74,9 +74,9 @@ spec:
           volumeMounts:
             - mountPath: /velociraptor/
               name: {{ include "velociraptor.fullname" . }}
-            - mountPath: /velociraptor/startup/entry.sh
-              name: entrypoint
-              subPath: entry.sh
+            #- mountPath: /velociraptor/startup/entry.sh
+              #name: entrypoint
+              #subPath: entry.sh
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -87,10 +87,10 @@ spec:
         - name: {{ include "velociraptor.fullname" . }}
           persistentVolumeClaim:
             claimName: {{ include "velociraptor.fullname" . }}
-        - name: entrypoint
-          configMap:
-            name: {{ include "velociraptor.fullname" . }}
-            defaultMode: 0744
+        #- name: entrypoint
+          #configMap:
+            #name: {{ include "velociraptor.fullname" . }}
+            #defaultMode: 0744
       {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}

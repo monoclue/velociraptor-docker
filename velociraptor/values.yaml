@@ -63,8 +63,8 @@ env:
   VELOX_PASSWORD: admin
   VELOX_ROLE: administrator
 
-config:
-  name: entry.sh
+#config:
+  #name: entry.sh
 
 service:
   type: LoadBalancer
