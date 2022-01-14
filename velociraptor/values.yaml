@@ -36,18 +36,18 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-extraArgs:
-  PUBLIC_PATH: public
-  VELOX_FRONTEND_HOSTNAME: VelociraptorServer
-  BIND_ADDRESS: 0.0.0.0
-  LOG_DIR: ./
-  LOG_PER_COMPONENT: true
-  VELOX_SERVER_URL: VelociraptorServer
-  SELF_SIGNED_CERT: true
-  DATASTORE_LOCATION: ./
-  FILESTORE_DIRECTORY: ./
-  VELOX_USER: admin
-  VELOX_PASSWORD: admin
+#extraArgs:
+  #PUBLIC_PATH: public
+  #VELOX_FRONTEND_HOSTNAME: VelociraptorServer
+  #BIND_ADDRESS: 0.0.0.0
+  #LOG_DIR: ./
+  #LOG_PER_COMPONENT: true
+  #VELOX_SERVER_URL: VelociraptorServer
+  #SELF_SIGNED_CERT: true
+  #DATASTORE_LOCATION: ./
+  #FILESTORE_DIRECTORY: ./
+  #VELOX_USER: admin
+  #VELOX_PASSWORD: admin
 
 env:
   PUBLIC_PATH: public
