@@ -3,6 +3,7 @@ LABEL version="Velociraptor v0.6.1"
 LABEL description="Velociraptor server in a Docker container"
 LABEL maintainer="Wes Lambert, @therealwlambert"
 ENV VERSION="0.6.1"
+COPY ./entry.sh .
 RUN chmod +x entry.sh && \
     apt-get update && \
     apt-get install -y curl wget jq rsync && \
@@ -31,4 +32,4 @@ RUN cp /opt/velociraptor/linux/velociraptor . && chmod +x velociraptor && \
     mkdir -p /velociraptor/clients/linux && rsync -a /opt/velociraptor/linux/velociraptor /velociraptor/clients/linux/velociraptor_client
 
 # Configmap details
-CMD ['./entry.sh']
+CMD [ "sh", "-c", "/entry.sh" ]
