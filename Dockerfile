@@ -24,7 +24,6 @@ RUN chmod +x entry.sh && \
     apt-get remove -y --purge curl wget jq && \
     apt-get clean
 
-COPY ./entry.sh .
 WORKDIR /velociraptor
 
 # Move binaries into place
@@ -32,4 +31,4 @@ RUN cp /opt/velociraptor/linux/velociraptor . && chmod +x velociraptor && \
     mkdir -p /velociraptor/clients/linux && rsync -a /opt/velociraptor/linux/velociraptor /velociraptor/clients/linux/velociraptor_client
 
 # Configmap details
-CMD [ "sh", "-c", "/entry.sh" ]
+CMD [ "sh", "-c", "entry.sh" ]
