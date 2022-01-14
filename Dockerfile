@@ -31,4 +31,4 @@ RUN cp /opt/velociraptor/linux/velociraptor . && chmod +x velociraptor && \
     mkdir -p /velociraptor/clients/linux && rsync -a /opt/velociraptor/linux/velociraptor /velociraptor/clients/linux/velociraptor_client
 
 # Configmap details
-CMD [ "bin/sh", "-c", "entry.sh" ]
+CMD [ "sh", "-c", "entry.sh" ]
