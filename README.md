@@ -8,5 +8,6 @@
   - Default u/p is `admin/admin`
 
 #### To Do
+- add namespace creation to helm
 - move username and password to secret
 - enable the use of custom certs
