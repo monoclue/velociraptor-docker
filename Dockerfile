@@ -20,7 +20,7 @@ RUN chmod +x /entry/entry.sh && \
     wget -O /opt/velociraptor/windows/velociraptor_client.exe "$WINDOWS_EXE" && \
     wget -O /opt/velociraptor/windows/velociraptor_client.msi "$WINDOWS_MSI" && \
 
-  # Cleanup
+  # Clean-up
     apt-get remove -y --purge curl wget jq && \
     apt-get clean
 
